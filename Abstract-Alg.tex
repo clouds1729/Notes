@@ -9,6 +9,20 @@
 \usepackage[margin=.8in]{geometry}
 \usepackage{fancyhdr}
 \usepackage{hyperref}
+% load the CM symbol font
+\DeclareSymbolFont{arrows}{OMS}{cmsy}{m}{n}
+% change the arrows to be taken from the CM symbol font
+\DeclareMathSymbol{\leftrightarrow}{\mathrel}{arrows}{"24}
+\DeclareMathSymbol{\leftarrow}{\mathrel}{arrows}{"20}
+   \let\gets=\leftarrow
+\DeclareMathSymbol{\rightarrow}{\mathrel}{arrows}{"21}
+   \let\to=\rightarrow
+\DeclareMathSymbol{\mapstochar}{\mathrel}{arrows}{"37}
+% the bar for making longer arrows
+\DeclareMathSymbol{\relbardash}{\mathbin}{arrows}{"00}
+\DeclareRobustCommand\relbar{%
+  \mathrel{\smash\relbardash}% \smash, because - has the same height as +
+}
 \geometry{letterpaper}
 \linespread{1.2}
 
@@ -21,7 +35,12 @@
 
 \newcommand{\mybox}[2][black]{\colorbox{#1}{#2}}
 \newcommand{\mmbox}[2]{\begin{mdframed}\emph{Note:} #1 \end{mdframed}}
-
+\newcommand{\rightarrowline}{%
+    \begin{tikzpicture}[baseline=-0.5ex, line width=0.5pt]
+        \draw[->] (0,0) -- (0.8,0);
+        \draw (0.8,0) -- (0.8,0.15);
+    \end{tikzpicture}%
+}
 
 \newcommand{\RR}{\mathbb{R}}
 \newcommand{\NN}{\mathbb{N}}
@@ -35,7 +54,7 @@
 \newcommand{\brac}[1]{\left[ #1 \right]}
 \newcommand{\sol}[1]{\begin{mdframed}\emph{Solution.} #1\end{mdframed}}
 \newcommand{\solproof}[1]{\begin{mdframed}\begin{proof} #1\end{proof}\end{mdframed}}
-
+\newcommand{\dis}[1]{\begin{mdframed}\emph{Disclaimer.} #1\end{mdframed}}
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
 \newtheorem{lemma}{Lemma}
@@ -44,7 +63,11 @@
 
 \begin{document}
 \thispagestyle{empty}
+\color{blue}
 \tableofcontents
+
+\dis{I assumed the reader is familiar with a lot of the basics in these notes}
+\color{black}
 \clearpage
 \pagestyle{fancy}
 
@@ -53,6 +76,51 @@
 \begin{center}
 {\large Abstract Algebra}
 \end{center}
+
+\section{Basics}
+\subsection{Set Theory}
+
+\textbf{Function:} Denoted by $f: A \rightarrow B$ for sets $A$ and $B$ or as $f: a \mapsto b$ for $a \in A,b \in B. $ \\
+\textbf{Domain:}  The set $A$ \\
+\textbf{Codomain:}  The set $B$\\
+\textbf{Range/Image:} $C = [b \in B | b = f(a), a \in A]$ where $C \subseteq B$. $ C = f(A)$\\
+\textbf{Preimage/inverse} $D = [a \in A | f(a) \in C]$ where $D \subseteq A$. $ D = f^{-1} (C)$\\
+\textbf{Composition} $(g \circ f)(a) = g(f(a)) | f: A \to B, g: B \to C $
+
+\subsubsection{Properties of relations}
+\textbf{Injective:} $a_1 \neq a_2, \to f(a_1) \neq f(a_2)$ \\
+\textbf{Surjective:} $\forall b \in B, \exists a \in A$ s.t. $f(a) = b $ \\
+\textbf{Bijective:} Both injective and surjective.\\
+\textbf{Left Inverse:} $(g: B \to A)$ s.t. $ (g \circ f: A \to A)$ is the identity map on A.\\
+\textbf{Right Inverse:} $(h: B \to A)$ s.t. $ (f \circ h: B \to B)$ is the identity map on B.\\
+
+\begin{proposition}
+\item[1] $f$ is injective iff $f$ has a left inverse
+\item[2] $f$ is surjective iff $f$ has a right inverse
+\item[3] $f$ is bijective iff $f$ has both a left and right inverse
+\end{proposition}
+
+\begin{proof}
+\item[1] $\quad f$ is injective $\iff$ for all $a, b \in A$, if $f(a) = f(b)$, then $a = b$ $\iff$ there exists a function $g: B \to A$ such that $g \circ f = \text{id}_A$ $\iff$ $f$ has a left inverse.
+\item[2] $\quad f$ is surjective $\iff$ for every $b \in B$, there exists an $a \in A$ such that $f(a) = b$ $\iff$ there exists a function $h: B \to A$ such that $f \circ h = \text{id}_B$ $\iff$ $f$ has a right inverse.
+\item[3] $\quad f$ is bijective $\iff$ $f$ is injective and surjective $\iff$ $f$ has a left and right inverse.
+
+\end{proof}
+
+In \textbf{Prop 3}, the left inverse = right inverse = inverse. The inverse is \textbf{unique}.
+
+\begin{definition}
+A permutation of a set A is a bijection from A onto itself
+\end{definition}
+
+\begin{definition}
+If $A \subseteq B$ and $f: B \to C$, we denote the \textbf{restriction} of $f$ to A as $f|_{A}$ 
+\end{definition}
+
+\begin{definition}
+If $A \subseteq B$ and $f: A \to C$ then there is a function $g: B \to C$ s.t  $g|_{A} = f$. We say $g$ is an \textbf{extension} of $f$ to $B$. 
+\end{definition}
+
 
 \section{Monoids}
 \begin{definition}
@@ -89,7 +157,7 @@ Parentheses can be inserted in any manner in the product without changing its va
 \end{proposition}
 
 \begin{proof}
-\textcolor{blue}{Induction. Left as an exercise for the reader.}
+Induction.
 \end{proof}
 
 
@@ -122,8 +190,26 @@ Define a map $\rho$ of $(1, \ldots, n-1) \text{ into itself by the rule s.t.}$
 \[\prod_{i = 1}^{n} x_{\rho(i)} = \prod_{i = 1}^{n-1} x_{\rho(i)} \cdot  x_{n} \]
 
 
-\mybox[yellow]{Cf. [Algebra, Lang] P5}
-
+\mybox[yellow]{Cf. [Algebra, Lang] P5} 
 \end{proof}
+
+
+\indent  \indent For $x \in G$, we define $x^{n}$ as 
+
+\[ \prod_{1}^{n} x\]
+
+\subsection{Submonoids}
+
+\begin{definition}
+$H \subseteq G$, is a submonoid if $e \in H \text{ and }\forall x, y \in H, x \cdot y \in H$.
+\end{definition}
+Thus, H is \textbf{closed} under the law of composition. It follows that H is also a monoid.
+
+Example : If $x \in G$ then the subset of powers of $x [x^{n}, n = 0,1, \ldots ]$ is a submonoid of G.\\
+The set of integers $\geq 0$ under addition is a monoid(\textcolor{blue}{an additive monoid})
+
+\section{Groups}
+
+
 
 \end{document}
