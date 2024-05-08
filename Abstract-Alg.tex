@@ -121,6 +121,44 @@ If $A \subseteq B$ and $f: B \to C$, we denote the \textbf{restriction} of $f$ t
 If $A \subseteq B$ and $f: A \to C$ then there is a function $g: B \to C$ s.t  $g|_{A} = f$. We say $g$ is an \textbf{extension} of $f$ to $B$. 
 \end{definition}
 
+Let $A$ be a nonempty set.\\
+A \textbf{binary relation} on a set A is a subset C of $A \times A$ denoted as $a \sim b$ if $(a,b) \in C$\\
+$\sim$ is: \newline
+\textbf{Reflexive} if $a \sim a$ for all $a \in A$. \\
+\textbf{Symmetric} if $a \sim b \implies b \sim a$ for all $a,b \in A$.\\
+\textbf{Transitive} if $a \sim b$ and $b \sim c \implies a \sim c$ for all $a,b,c \in A$.\\
+is an \textbf{equivalence relation} if it is reflexive, symmetric and transitive. If $\sim$ is an equivalence relation, then the equivalence class of $a \in A$ is defined to be $[x \in A | x \sim a]$. \\
+$A_i \subseteq A [i \in [1,n]]$ is a \textbf{partition} of $A$ is the dijoint union of of $A_i$.
+
+\subsection{Practice Questions}
+Cf. Abstract Algebra [Dummit and Foote] P3-P4 
+1. \sol{
+a. Yes (Since this is M again)
+b. No  
+c. Yes 
+d. No
+e. Yes (Identity Matrix) 
+f. No}
+2.
+\solproof{
+It is sufficient to show that $(P+Q)M = M(P+Q)$. Using the distributive property of matrix multiplication, we see that
+\[(P+Q)M = PM + QM = MP + MQ = M(P + Q)\]
+}
+3. \solproof{
+It is sufficient to show that $(P \cdot Q)M = M(P \cdot Q)$. Using the associative property of matrix multiplication, we see that
+\[(P \cdot Q)M = P (Q \cdot M) = P (M \cdot Q) = (P \cdot M) Q = (M \cdot P) Q = M(P \cdot Q)\]
+}
+4. \sol{
+\[\begin{pmatrix}
+p & q \\
+0 & p
+\end{pmatrix}\]
+}
+
+
+
+
+
 
 \section{Monoids}
 \begin{definition}
@@ -128,6 +166,7 @@ If $A \subseteq B$ and $f: A \to C$ then there is a function $g: B \to C$ s.t  $
 Let $S$ be a set. A mapping
  $S \times S \rightarrow S$ 
 is called a $\textbf{law of composition}$ (of $S$ into itself).
+
 
 
 \end{definition}
