@@ -1,0 +1,687 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amsthm, amsfonts, amssymb}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{mdframed}
+\usepackage{multicol}
+\usepackage{verbatim}
+\usepackage{tikz}
+\usepackage[margin=.8in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+% load the CM symbol font
+\DeclareSymbolFont{arrows}{OMS}{cmsy}{m}{n}
+% change the arrows to be taken from the CM symbol font
+\DeclareMathSymbol{\leftrightarrow}{\mathrel}{arrows}{"24}
+\DeclareMathSymbol{\leftarrow}{\mathrel}{arrows}{"20}
+   \let\gets=\leftarrow
+\DeclareMathSymbol{\rightarrow}{\mathrel}{arrows}{"21}
+   \let\to=\rightarrow
+\DeclareMathSymbol{\mapstochar}{\mathrel}{arrows}{"37}
+% the bar for making longer arrows
+\DeclareMathSymbol{\relbardash}{\mathbin}{arrows}{"00}
+\DeclareRobustCommand\relbar{%
+  \mathrel{\smash\relbardash}% \smash, because - has the same height as +
+}
+\geometry{letterpaper}
+\linespread{1.2}
+
+
+\usepackage{xcolor}
+
+
+
+
+\newcommand{\mybox}[2][black]{\colorbox{#1}{#2}}
+\newcommand{\mmbox}[2]{\begin{mdframed}\emph{Note:} #1 \end{mdframed}}
+\newcommand{\rightarrowline}{%
+    \begin{tikzpicture}[baseline=-0.5ex, line width=0.5pt]
+        \draw[->] (0,0) -- (0.8,0);
+        \draw (0.8,0) -- (0.8,0.15);
+    \end{tikzpicture}%
+}
+
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\f}{\mathbb{f}}
+\newcommand{\CC}{\mathbb{C}}
+
+\newcommand{\set}[1]{\left\lbrace #1 \right\rbrace}
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\parens}[1]{\left( #1 \right)}
+\newcommand{\brac}[1]{\left[ #1 \right]}
+\newcommand{\sol}[1]{\begin{mdframed}\emph{Solution.} #1\end{mdframed}}
+\newcommand{\solproof}[1]{\begin{mdframed}\begin{proof} #1\end{proof}\end{mdframed}}
+\newcommand{\dis}[1]{\begin{mdframed}\emph{Disclaimer.} #1\end{mdframed}}
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+
+
+\begin{document}
+\thispagestyle{empty}
+\color{blue}
+\tableofcontents
+
+\dis{I assumed the reader is familiar with a lot of the basics in these notes}
+\color{black}
+\clearpage
+
+
+\noindent George K. \hfill \today
+
+\begin{center}
+{\large Linear Algebra}
+\end{center}
+
+\section{Multiset/Cartesian Products, Matrices/Block Matrix Form}
+By definition, a set does not contain repeated elements.
+\begin{definition}
+A multiset M is a collection of elements in which each element can appear more than once. The number of appearances of an element of $a \in M$ is called the multiplicity of the element. The set S of elements that appear in a multiset - not counting multiplicty - is called the underlying set of the multiset
+\end{definition}
+
+\textbf{Example:} M = {a,a,b,c,c,c}\\
+\textbf{Underlying set} A = {a,b,c}\\
+
+Multisets play a role in describing the roots of polynomials. \textbf{Example}
+
+\(p(x) = x^{2} - 4x + 4\)
+
+\textbf{Root set} = {2} and \textbf{root multiset} = {2,2}
+
+For two multisets to be equal, they must have the same underlying sets and their elements must have the same multiplicity.
+
+
+\subsection{Families of set}
+
+\textbf{Example}  Family $sub(\RR^n)$ of all subspaces of $\RR^n$\\
+Family $sub(V)$ of subspaces of any vector space $V$
+
+Families are often written in indexed format
+
+\([F = {A_i | A_i \subseteq X ,  i \in I}]\)
+
+There are situations in which we want to allow duplicates in families of sets. Thus, a family of sets can be a \textbf{set of sets} or a \textbf{multiset of sets}. However, the root "sets" of polynomials are often multisets.
+
+Collection or Families are often used for multisets or sets(so must check per book)
+
+\begin{definition}
+An indexed family or indexed collection is a multiset of the form 
+\(F = [a_i | i \in I]\)
+
+where I is called the inex set of the family., We allow duplicates in and so $F$ is a multiset of sets, unless otherwise specified.
+\end{definition}
+
+\begin{theorem}
+If \(a_1 \ldots a_n\) are integers with gcd = d. Then\\
+1. There exist integers \(k_1 \ldots k_n\) for which \\
+\(d =k_1 \cdot a_1 + \ldots + k_n \cdot a_n\)\\
+This is called \textbf{Bezout's Identity}\\
+\mybox[green]{So the gcd of any set of numbers can be written as a sum in the form above}\\
+2. In particular, \(a_1 \ldots a_n\) are relative prime iff there exist integers \(k_1 \ldots k_n\) for which 
+\(k_1\cdot a_1 + \ldots + k_n \cdot a_n \ = 1\) \\
+\end{theorem}
+Note that the \textbf{Bezout} coefficients of $k_n$ are far from unique, since for example:
+
+\(ka + jb = (k + rb)a + (j - ra)b\)
+
+\subsection{Polynomials}
+
+Let F be a field($\RR$ or $\CC$). The family of all polinomials in the variable $x$ with coefficents from F is denoted by $F[x]$. F is called the base field of $F[x]$ and we say that any $p(x) \in F[x]$ is a polynomial over F. If \(p(x) = a_0 + a_{1} x + a_{2} x^{2} + \ldots + a_{n} x^{n}\) \\
+\indent If $a_n$ is non zero then it is called the leading coefficient.\\
+\indent A polynomial is monic if its leading coefficient is 1. \\
+\indent The degree of $p(x)$ is n(assuming $a_n = 0$), denoted as $deg(p(x))=n$. The degree of the zero polynomial is $-\infty$
+
+
+\begin{definition}
+Let $p(x), q(x) \in F[x]$\\
+1. $p(x)$ divides $q(x)$ if there exists a polynomial $f(x) \in F[x]$ for which $q(x) = f(x)p(x)$. In this case $p(x)|q(x)$\\ 
+Another way to say this is that $q(x)$ is a polynomial multiple of $p(x)$\\
+2. A nonconstant polynomial $p(x)$ is said to \textbf{split} over $F$ if $p(x)$ can be written as a product of not necessarily disctinct linear factors.
+
+\(p(x) = (x-a_1) \ldots (x - a_n)\) where $a_i \in F$
+\end{definition}
+\mybox[green]{Complex polynomials split over $\CC$ but for real polynomials that's not the case(consider $(x^2 + 1)$} 
+
+
+\begin{definition}
+The polynimials S = $[p_{1}(x), \ldots , p_{1}(x)] \in F[x]$ are relatively prime if their gcd is 1. In symbols,
+$gcd(p_{1}(x), \ldots , p_{1}(x)) = 1$.\\
+and they are \textbf{pairwise relatively prime} if every two polynomials in $S$ are relatively prime, in symbols
+$i \neq j \to gcd(p_{i}(x), \ldots , p_{j}(x))= 1$ where $i,j \in [1,n]$
+\end{definition}
+
+\subsubsection{Bezout's Identity for Polynomials}
+\begin{theorem}
+If \(p_{1}(x) \ldots p_{n}(x) \in $F[x]$\) are integers with $gcd = d(x)$. Then\\
+1. There exist integers \(k_{1}(x) \ldots k_{n}(x) \in $F[x]$\) for which \\
+\(d(x) =k_{1}(x) \cdot p_{1}(x) +  \ldots + k_{n}(x) \cdot p_{n}(x) \in $F[x]$\)\\
+This is called \textbf{Bezout's Identity for polynomials}\\
+\mybox[green]{So the gcd of any set of numbers can be written as a sum in the form above}\\
+2. In particular, \(p_{1}(x) \ldots p_{n}(x)\) are relative prime iff there exist integers \(k_{1}(x) \ldots k_{n}(x)\) for which 
+\(k_{1}(x) \cdot p_{1}(x) +  \ldots + k_{n}(x) \cdot p_{n}(x) = 1\) \\
+\end{theorem}
+
+Polynomials have two properties that are often mistaken to be the same. They are \textbf{not} the same, but they are equivalent for polynomials.
+\begin{definition}
+Let $p(x) \in F[x]$ be a nonconstant polynomial.\\
+1. $p(x)$ is \textbf{irreducible} if it has no nonconstant proper factors, that is, if \\
+\(p(x) = a(x)b(x) \to a(x) or b(x) is a constant\)\\
+
+2. $p(x)$ is \textbf{prime} if whenever it divides a product, it must divide one of the factors, possibly both.
+\(p(x)|a(x)b(x) \to p(x)|a(x) \text{ or } p(x)|b(x)\)
+\end{definition}
+
+
+\begin{theorem}
+A nonconstant polynomial $p(x)$ is irreducible iff it is prime.
+\end{theorem}
+
+\textbf{This is also an analog of the fundamental theorem of arithmetic for polynomials}
+
+\begin{theorem}
+\textbf{Fundamental Theorem of Arithmetic that holds for polynomials}
+
+Every nonconstant polynomial $p(x) \in F$ can be written as a product  of irreducible(prime) polynomials. This is called thbe prime factorization of $p(x)$. Moreover, the \textbf{prime factoriztion} is unique up to order of the factors and multiplication by a scalar.
+\end{theorem}
+
+\subsection{Euclidean and Unitary Spaces}
+n-dimensional Euclidean space $R^{n}$, has a \textbf{standard inner product}, called the dot product.
+\( u = (r_1, \ldots , r_n) \text{ } v = (s_1, \ldots , s_n)\)\\
+\(\langle u,v \rangle = r_1\cdot s_1 + \ldots r_n \cdot s_n\)\\
+
+Also, n-dimension \textbf{unitary space} $\CC$ is equipped with the \textbf{standard inner product} defined by 
+\( u = (r_1, \ldots , r_n) \text{ } v = (s_1, \ldots , s_n)\)\\
+\(\langle u,v \rangle = r_1\cdot \overline{s_1} + \ldots r_n \cdot \overline{s_n}\)\\
+The overbar denotes complex conjugates.
+
+\subsection{Cartesian products}
+1. For sets $S_1$ and $S_2$, the cartesian product $S_1 \times S_2$ is defined as a set of ordered pairs
+\(S_1 \times S_2 = [{(s_1, s_2)| s_1 \in S_1\text{ and } s_2 \in S_2}]\)\\
+
+2. Can easily be generalized to a finite sequence of $F = (S_1, \ldots , S_n)$ of sets
+
+\(\prod_{}^{}F = \prod_{1}^{n}F_i = S_1 \times \ldots \times S_n = \{S_1 \times S_2 = [(s_1,\ldots , s_n)| s_i \in S_i\} \)\\
+$S_i$ can be non - distinct written as \(S^n = S_1 \times \ldots \times S_n  \)\\
+
+3. The cartesian product of an infinite sequence $F= (S_1, S_2, \ldots)$ of sets is the set \\
+
+\(\prod_{1}^{\infty}S_i = \{(s_1, \ldots)| s_i \in S_i\} \)
+
+\subsection{Matrices} 
+The set of all $m \times n$ matrices with entries in $F$ can be written as $M_{m \times n} (F)$. If $m = n$ we can write this as $M_n (F)$. The $(i,j)$ can be written as $A = [a]_{i,j}$
+
+\subsubsection{Properties of Matrices}
+\textbf{Main superdiagonal lies above the diagonal and the main subdiagonal lies immediately below the main diagonal}
+
+\begin{definition}
+A submatrix is formed by removing zero or more rows/columns
+\end{definition}
+
+
+\begin{definition}
+The trace of a matrix A is the sum of the main diagonal entries of A. \\
+
+1. The trace is linear: $tr(aA + bB) = atr(A) + btr(B)$\\
+2. $tr(AB) = tr(B)$\\
+3. The trace is cyclic: $tr(ABC) = tr(BCA)$\\
+4. \textbf{trace of product doesn't equal product of traces}
+\end{definition}
+
+
+\subsubsection{Transpose}
+\begin{definition}
+The \textbf{transpose} of A matrix A is a matrix $A^t$ s.t. $A_{i,j} = (A^{t})_{i,j}$\\
+
+1. Its an \textbf{involution}(applying it twice is equivalent to doing nothing)\\
+2. Its \textbf{linear}\\
+3. $(AB)^t = B^t A^t $\\
+4. $det(A^t) = det(A)$
+
+\end{definition}
+
+\subsubsection{Matrix Rank}
+
+\begin{definition}
+\textbf{Row rank}: Dimension of row space\\
+\textbf{Column rank}: Dimension of Column space\\
+
+Both ranks are equal.
+\end{definition}
+
+
+\subsubsection{Diagonal and Triangular matrices}
+1. A square matrix A is \textbf{diagonal} if all the entries off the main diagonal are zero.\\
+2. A square matrix A is \textbf{upper triangular} if all of its entries below the main diagonal are zero.\\
+3. Similarly for \textbf{lower triangular} matrix.\\
+
+\subsubsection{Block Form and Block-Matrix Algebra}
+
+1. Each submatrix forms a block of a matrix\\
+2. Not to be confused with a matrix of matrixes\\
+3. Matrix algebra can be performed as thought each block was an entry(of course the blocks have to be compatible)\\
+
+There's a special case for matrices in block form, represented by the matrix C below:
+
+\[
+C = \begin{bmatrix}
+A & * \\
+0 & D
+\end{bmatrix}
+\]
+
+For any positive integer m, the mth power of C, denoted as \(C^m\), is given by:
+
+\[
+C^m = \begin{bmatrix}
+B^m & * \\
+0 & D^m
+\end{bmatrix}
+\]
+
+where \(B^m\) and \(D^m\) are the mth powers of matrices B and D, respectively. The symbol * represents arbitrary values, which can vary. The main point is that the block form of the matrix remains consistent.
+
+Even more generally, for polynomials \(p(C) \in F[x]\), we have:
+
+\[
+p(C) = \begin{bmatrix}
+p(A) & * \\
+0 & p(D)
+\end{bmatrix}
+\]
+
+where \(p(A)\) and \(p(D)\) are the evaluations of the polynomial p(x) at matrices A and D, respectively. 
+
+
+\subsubsection{Block Diagonal and Block Triangular Matrices}
+
+A square matrix of the form:
+
+\[
+C = \begin{bmatrix}
+A_1 & 0 & \ldots & 0 \\
+0 & A_2 & \ldots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \ldots & A_n
+\end{bmatrix}
+\]
+
+where each \(A_i\) is a square matrix, is called a \textbf{block diagonal matrix}. The symbol \(\ldots\) represents the remaining entries in the diagonal, which can be arbitrary values.
+
+For
+
+\[
+B = \begin{bmatrix}
+A_1 & \ldots & \ldots & * \\
+0 & A_2 & \ldots & \vdots \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \ldots & A_n
+\end{bmatrix}
+\]
+
+where each \(A_i\) is a square matrix, it is called a \textbf{block upper triangular matrix}.
+
+\subsubsection{Elementary Row Operations}
+
+\textit{1. Row Scaling (multiplying a row by a non-zero scalar)\\
+2. Row interchange\\
+3. Row adjustment (Adding the j-th row to the i-th row)}
+
+\mybox[green]{There are corresponding column operations.}
+
+\subsubsection{Row Echelon Form}
+
+1. Two matrices are said to be row equivalent if they can be transformed into each other by a series of zero or more elementary row operations.\\
+2. Row equivalence is an equivalence relation.\\
+3. Each matrix is row equivalent to one \textbf{reduced row echelon form}.\\
+4. A matrix is in reduced row echelon form if its RREF is the identity matrix. It has no zero rows and hence can be expressed as a product of elementary matrices.
+
+\subsubsection{Determinants}
+
+\begin{proposition}
+For a block upper triangular matrix B:
+
+\[
+B = \begin{bmatrix}
+A_1 & \ldots & \ldots & * \\
+0 & A_2 & \ldots & \vdots \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \ldots & A_n
+\end{bmatrix}
+\]
+
+then \( \det(B) = \prod_{i=1}^{n} \det(A_i) \).
+\end{proposition}
+
+The simplest proof uses the permutation definition of the determinant.
+
+\begin{proof}
+We prove by induction on the number n of blocks in the matrix A. If n = 1, the case is obvious.
+
+Suppose n = 2, and
+
+\[
+A = \begin{bmatrix}
+B & * \\
+0 & C
+\end{bmatrix}
+\]
+
+Let
+
+\[
+B = \begin{bmatrix}
+b_{1,1} & \ldots & \ldots & b_{1,k} \\
+\vdots & A_2 & \ldots & \vdots \\
+\vdots & \vdots & \ddots & \vdots \\
+b_{k,1} & 0 & \ldots & b_{k,k}
+\end{bmatrix}
+\]
+
+Again, using induction on the size k of the block B, for k = 1, the result is clear by expansion along the first column. That is, \( \det(A) = b_{1,1} \cdot \det(C) \).
+
+Suppose the result is true for \( k \geq 1 \), and let B have size \((k+1) \times (k+1)\). Then
+
+\[
+\det(A) = \prod_{i=1}^{k+1} (-1)^{i+1} \cdot b_{i,1} \cdot \det(B_{i,1}) \cdot \det(C)
+\]
+
+where \( C_{i,1} = (-1)^{i+1} \cdot A_{i,1} \) and \( A_{i,1} \) is the submatrix formed when the i-th row and the first column of A are deleted.
+
+Notice that we expanded along the first column. Observe that each \( A_{i,1} \) has a \( (k \times k) \) block in its upper left side. By the induction hypothesis, \( \det(A_{i,1}) = \det(B_{i,1}) \cdot \det(C) \).
+
+Plugging this back into the earlier expression for \( \det(A) \), we get: \(|A| = \prod_{i=0}^{k} (-1)^{i+1} \cdot b_{i+1,j} \cdot det(B_{i+1,j}) \cdot det(C)) = det(B)\cdot det(C)\) , as desired.
+
+Now observe that any $n \times n$ diagonal matrix can be partitioned to have the form of just two diagonal blocks, and hence we apply our \textbf{IH} 
+
+Hence we get:
+\[
+B = det(\begin{bmatrix}
+A_1 & \ldots & \ldots & * \\
+0 & A_2 & \ldots & \vdots \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \ldots & A_n
+\end{bmatrix}) = det(\begin{bmatrix}
+A_1 & \ldots & \ldots & * \\
+0 & A_2 & \ldots & \vdots \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \ldots & A_n-1
+\end{bmatrix}) det(A_n) \stackrel{\textbf{IH}}{=} \prod_{i=1}^{n} A_{i}
+\]
+\end{proof}
+
+
+\subsection{Equivalence Classes and Partitions}
+
+Informally, a partition of a non empty set S is a collection of nonempty, non overlapping subsets of S whose union is the entire set S.
+
+
+\begin{definition}
+ A partition of a non empty set S is a collection 
+
+\(P = {B_i | i \in I}\)
+
+where each $B_i$ are non empty, disjoint and their union is the entire set $S$
+\end{definition}
+\textbf{Partition of Number line} 
+
+\(F = [n,n+1) n \in Z\)
+ \subsubsection{Equivalence relations}
+
+\begin{definition}
+A binary relation on a set $S$ is said to be an equivalence relation if the relation is \mybox[green]{symmetric, reflexive and transitive.}
+
+\end{definition}
+
+\textbf{Example:} Integers modulo k and equality of integers.
+
+Denoted with "[]", an equivalence class $C$ of an equivalence relation on the set $A$ is a largest subset of $A$ for which all elements in $C$ are equivalent but no elements in $A-C$ are equivalent to an element in $C$
+
+
+\begin{proposition}
+Partition induce equivalence classes. There is a bijection between the equivalence relation on a set and partition on A.
+\end{proposition}
+
+\begin{proof}
+Equivalence class $\to$ partition\\
+1. Every element of A is in its own equivalence class.\\
+2. If two elements are in the same equivalence class, then they are equivalent.\\
+3. If [a]  and [b] are equivalence classes then either $[a] = [b]$ or $[a] \cap [b] = \emptyset$\\
+4. It follows that the set of equivalence classes is a partition of A, which we call the \textbf{equivalence class partition}.\\
+The proof for each uses properties of an equivalence relation
+\\
+Partition $\to$ equivalence class\\
+1. We know that each element in an equivalence class is a representative of the equivalence class\\
+2. Thus, \(M =[[a]| a\in A]\), where M is a multiset, contains a lot of duplicates\\
+3. We eliminate duplicates by setting \(P(\sim) =[[a], a \in A]\), where $P(\sim)$ is a set.
+4. $P(\sim)$ is an equivalence-class parition.
+\end{proof}
+
+For equality on a set A, the equivalence classes are singleton sets. Thus, the partition formed is just each element. This is the smallest partition possible.
+
+For a more geometric view, define an equivlance relation in a plane in which parallel lines in a plane to be equivalent to each other
+
+
+\subsubsection{Equivlance of Partition and Equivalence Relations}
+
+The composition of the maps from Equiv Classes $\to$ Partition and Partition $\to$ Equiv Classes forms the identity map. Hence these two relations are inverses of each other and hence they are bijections.
+
+
+\subsubsection{Canonical Forms and Invariants}
+
+1. These are tests for equivalence.\\
+2. The word \textbf{canonical} means \textbf{standard}.\\
+3. A canonical form is a \textbf{system of distinct representatives} for the equivalence relation.\\
+4. The unique element of the set of canonicla forms that is equivalent to an equivalence class or partition $S$ is called the \textbf{canonical form} of $S$. \\
+
+A method for finding canonical form $\to$ A test for equivalence\\
+Namely, two elements are equivalent if they have the same canonical form\\
+
+
+Two matrices of the same size are said to be matrix equivalent, if there exist invertible matrices $P$ and $Q$ of the same size for which $B = PAQ$\\
+
+Premultiplying by $P$ indicates a series of \textbf{elementary row operations}\\
+Postmultiplying by $Q$ indicates a series of \textbf{elementary column operations}
+
+$rref(A_{m,n}) \equiv A_{m,n}$\\
+
+\[
+J_{m,n,r} = \begin{bmatrix}
+I_r & 0 \\
+0 & 0 \\ 
+\end{bmatrix}
+\]
+
+where $r = rank(A)$.\\
+
+Equivalent matrices have the same rank\\
+
+Every matrix is equivalent to exactly one matrix of form $J_{m,n,r}$\\
+
+The rank is an invariant. The corresponding $J_{m,n,r}$ is a canonical form.\\
+
+We can just check the rank of each matrix and construct its $J_{m,n,r}$ form.\\
+
+We have the set of matrices of canonical forms for matrix equivalence in $M_{m,n} (F)$ as:
+
+\(C = [J_{m,n,r} | 0 \leq r \leq min(m,n)]\)
+
+
+
+\paragraph{Similar Matrices}
+
+Two square matrices are said to be similar, denoted by $A \sim B$ if there exists an invertible matrix $P$ such that:
+
+\( B = P^{-1} A P\)
+
+Same as before( $B = PAQ$) with $Q =  P^{-1} $ . This means we are no longer free to put the matrix in both $rref$ or $rcef$.\\
+\color{blue}
+Suppose we apply a row operation to the matrix a using the elementary matrix E, to get $EA$. Then to obrain similar matrix, we must multiply EA on the right by $E^{-1}$ to get $EAE^{-1}$. Similar case for column operations with elementary matrices. That is, if we exchange the $i-th$ and $j-th$ rows with $E$ then $E^{-1}$ changes the interchanges the same columns. Also, multiplying the $k-th$ row by a non zero scalar $r$ with $E$ gives $E^{-1}$ the role of multiplying the $k-th$ column by $\frac{1}{r}$.
+\color{black}
+
+\subsubsection{Invariants and Complete Invariants}
+
+\begin{definition}
+ A function from one equivalence class or partition to the set $X$ is called an \textbf{invariant} under the equivalence relation if it is constant on the equivalence classes of the equivalence relation(i.e it preserves the same value for each element of the same equivalent class).\\
+\[ a \sim b \implies f(a) = f(b) \]
+\textbf{Example:} $f: S \to 0$(not very useful)
+\end{definition}
+
+\begin{definition}
+ A function from one equivalence class or partition to the set $X$ is called an \textbf{complete invariant} under the equivalence relation if it is constant but distinct on the equivalence classes of the equivalence relation(i.e it preserves the same value for each element of the same equivalent class).
+\[ a \sim b \iff f(a) = f(b)\]
+
+\textbf{Example:} Rank of a matrix
+\end{definition}
+
+Because of the biconditional, complete invariants form a test for equivalence.
+
+For similar matrices, there is a \textbf{similarity invariant}. i.e the trace.
+
+\( B = P^{-1}A P \). Thus, 
+\[ tr(B) = tr( P^{-1}A P) \stackrel{\text{cyclic prop.}}{=} tr( AP^{-1} P) = tr(A)\]
+
+Thus,  \(A \sim B \implies tr(A) = tr(B)\).
+
+The same applies for the determinant. \(A \sim B \implies det(A) = det(B)\).\\
+
+ \mybox[red]{THE CONVERSE OF BOTH CASES IS NOT TRUE}
+
+But we have.\\
+
+\( \text{tr}(A) \neq \text{tr}(B) \implies A \not\sim B \)
+
+\mybox[green]{If C is the set of canonical forms for an equivalence relation} \\ \mybox[green]{ on a set S, we can easily turn it into a complete invariant simply by defining a function $f: S \to C$ by} \(f(s) = c_s [\forall s \in S]\)\\
+
+In words, $f(s)$ is simply the canonical form of $s$. On the other hand, complete invariants are more general than canonical forms because a complete invariant($f: S \to X$) can have a codomain X that is not sa subset of S.
+
+
+\section{Cardinality}
+\begin{definition}
+The \textbf{cardinality or cardinal number} of $A$, denoted by $|A|$ or $card(A)$ where $A$ is a finite set is just the natural number that gives the size of the set.\\
+
+The theory of infinte cardinal number is also called \textbf{trasfinite numbers}(by Georg Cantor)
+
+\end{definition}
+
+
+\subsubsection{Equipotence}
+
+\begin{definition}
+
+Two sets $S$ and $T$ are said to be \textbf{equipotent} , also called \textbf{equipollent} or \textbf{equinumerorous} written as $S \sim T$ if there is a \mybox[green]{bijective function} between the sets.
+\end{definition}
+
+\mybox[orange]{Two sets have the same cardinality if they are equipotent.}\\
+
+As an example, it's possible to show by finding appropriate bijections that $\ZZ \sim \NN$ and $\QQ \sim \NN$ where $\NN = {0,1,2, \ldots}$
+
+\subsubsection{Cardinal Numbers}
+
+Informally, if $S$ is a collection of sets, then equipotence is an equivalence relation that induces equivalence classes in $S$. Elements in an equivalence class are equipollent to each other. In each equivalence class there is a unique special set, called a \textbf{cardinal number} and defineed by the properties that we cannot discuss here without developing considerable additional background. The collection of cardinal numbers form a system of disctinct representative for equipotence on $S$. Moreover, since every set to exactly one equivalence class, it is equipotent to exactly one cardinal number, known as the $cardinality$ of S. \\
+
+
+Every natural number is a cardinal number, as the set of all natural numbers, which is denoted by $\aleph_0$ (Semitic Alphabets). In fact, cardinal numbers are sets. The cardinality $\aleph_0$ of the set $\NN$ is the smallest infinite cardinal number . We can now say 
+\[|\NN|=|\ZZ|=|\QQ|= \aleph_0\]
+
+But, the cardinality of the set $\RR$ of real numbers is denoted by the letter $c$ and called the \textbf{power of the continuum} (because the real line is sometimes called the continuum). $c > \aleph_0$
+
+\begin{definition}
+1. A set is \textbf{finite} and has \textbf{cardinality} k is equipotent ot a set of the form $ \NN_k = [{1, \ldots, k}]$ for $k \geq 0$ where $\NN_0 = \emptyset$. A set that is not finite is \textbf{infinite}\\
+
+2. Any set with cardinality $\aleph_0$ is called \textbf{countably infinite} set and any finite or countably infinite set is called a \textbf{countable} set. An infinite set that is not countable is said to be \textbf{uncountable}.
+
+\end{definition}
+
+
+\textbf{Uncountable:} $\RR , \mathbb{I}$ \hfill
+\textbf{Countable:} $\NN , \QQ, \ZZ$
+
+Cardinal numbers can be ordered. If $S$ is equipotent to a subset of T, we write
+\[ |S| \leq |T| \]
+
+and if $S$ is equipotent to a proper subset of T, we write 
+\[ |S| < |T| \]
+
+
+\mybox[orange]{Do not misinterpret the second condition, even though $\NN$ is a proper subset of $\ZZ$}\\ \mybox[orange]{and hence is equipotent to a subset of $\ZZ$, it is also equipotent to $\ZZ$ and hence $|\NN| \not< \ZZ$}\\
+
+For both finite and infinite sets, the following condition holds
+
+\[ (|S| \leq |T|) \land (|T| \leq |S|) \implies (|S| = |T|) \]
+ 
+\textcolor{blue}{The proof of the condition for infinite sets is a little bit more difficult that for finite sets}\\
+
+
+If $S$ is a set of finite cardinality $n\geq 0$. Then the cardinality of the power set $P(A)$ of $S$ is $2^n$. This implies $S$ has $2^n$ subsets. For both finite and infinite sets, 
+\[S < P(S)\]
+
+But for infinite sets, the cardinality of finite subsets of the set, which can be denoted as $P_{0} (S)$ follows:
+\[ |P_{0}(S)| = |S| \] That is, the cardinality of all finite subsets of $S$ has the same cardinality as $S$(\textcolor{blue}{where $S$ is an infinite set}).
+
+\mybox[green]{The cardinality of the powerset is often denoted as $2^{|S|}$}
+
+
+\begin{theorem}
+1. Schroder-Bernstein Theorem: \[ (|S| \leq |T|) \land (|T| \leq |S|) \implies (|S| = |T|) \]
+2. Cantor's Theorem: \[S < P(S)\]
+3. The cardinality of finite subsets of the set, which can be denoted as $P_{0} (S)$ follows:
+\[ |P_{0}(S)| = |S| \]
+\end{theorem}
+
+An implication of Cantor's theorem is that 
+\[|S| < |P(S)| < |P(P(S))| < |P(P(P(S)))| < \ldots \]
+
+Hence there are infinitely many infinite cardinal numbers.
+
+
+\subsubsection{Cardinal Number Arithmetic}
+
+Recall that the set of all functions from $T$ to $S$ is $S^T$
+
+\begin{definition}
+Let $\kappa$ and $\lambda$ be cardinal numbers. Let $S$ and $T$ be disjoint finite sets with cardinalities $\kappa$ and $\lambda$ respectively. Then we have:
+
+1. $|S \cup T| = \kappa + \lambda$\\
+2. $|S \times T| = \kappa \cdot \lambda$\\
+3. $|S^{T}| = \kappa^{\lambda}$\\
+\end{definition}
+
+Cardinal arithmetic for finite sets is associative, commutative, distributive and follows the properties of exponents.
+
+\begin{definition}
+Let $\kappa$ and $\lambda$ be cardinal numbers. Let $S$ and $T$ be disjoint sets with cardinalities $\kappa$ and $\lambda$ respectively, where at least one of the sets is an infinite sets. Then we have:
+
+\[|S \cup T| = \kappa + \lambda\ = |S \times T| = \kappa \cdot \lambda = max(\kappa, \lambda)\]
+\end{definition}
+
+
+\paragraph{Test for cardinality of sets of functions:}
+
+We denote a function from $X$ to $Y$ as $Y^{X}$. If $0 \in Y$ then the support of $f$ is the set of all eleemnts of the domain $X$ that are mapped to nonzero elements of the codomain Y.
+
+\[ supp(f) = \{x \in X | f(x) \neq 0\} \]
+
+\begin{theorem}
+Let $X$ be an infinite set and let $F$ be a countable set of size at least two.\\
+1. The set $F^X$ of all functions from $X$ to $F$ has cardinality greater than that of $X$:
+
+\[|F^X| > |X| \]
+
+2. If $F$ contains 0, then the set $F_{0} ^X$ of all functions from $X$ to $F$ that have finite support has the same cardinality as X:
+
+\[ |F_{0} ^X| = |X| < |F^X| \]
+
+\end{theorem}
+
+
+
+
+
+
+
+
+\end{document}

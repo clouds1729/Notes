@@ -1,0 +1,346 @@
+
+\documentclass{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\setcounter{MaxMatrixCols}{10}
+%TCIDATA{OutputFilter=LATEX.DLL}
+%TCIDATA{Version=5.50.0.2960}
+%TCIDATA{<META NAME="SaveForMode" CONTENT="1">}
+%TCIDATA{BibliographyScheme=Manual}
+%TCIDATA{Created=Thursday, May 09, 2024 21:40:36}
+%TCIDATA{LastRevised=Friday, May 17, 2024 11:49:13}
+%TCIDATA{<META NAME="GraphicsSave" CONTENT="32">}
+%TCIDATA{<META NAME="DocumentShell" CONTENT="Standard LaTeX\Blank - Standard LaTeX Article">}
+%TCIDATA{CSTFile=40 LaTeX article.cst}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{solution}[theorem]{Solution}
+\newtheorem{summary}[theorem]{Summary}
+\newenvironment{proof}[1][Proof]{\noindent\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+\input{tcilatex}
+\begin{document}
+
+
+\section{PS}
+
+\subsection{\protect\bigskip Induction}
+
+\begin{problem}
+Let $n$ be a nonnegative integer. Prove that
+\end{problem}
+
+\begin{equation*}
+\text{ }\underset{L(n)}{\frac{1}{1}-\frac{1}{2}+\frac{1}{3}...-\frac{1}{2n-1}%
++\frac{1}{2n}}=\underset{R(n)}{\frac{1}{n+1}+\frac{1}{n+2}+...+\frac{1}{2n}%
+\text{ }}
+\end{equation*}
+
+\begin{proof}
+We will apply induction on $n$. We
+
+\textbf{Base case}: We must prove $L(0)=R(0)$. This is true, because $L(0)$
+and $R(0)$ are empty sums and thus equal to $0.$
+
+\textbf{Induction Step}: Let $m$ be a nonnegative integer. Assume that $%
+L(m)=R(m)$(the induction hypothesis). We must prove that $L(m+1)=R(m+1)$. By
+definition,
+
+\begin{eqnarray*}
+L(m) &=&\frac{1}{1}-\frac{1}{2}+\frac{1}{3}+...+\frac{1}{2m-1}-\frac{1}{2m}
+\\
+L(m+1) &=&\frac{1}{1}-\frac{1}{2}+\frac{1}{3}+...+\frac{1}{2(m+1)-1}-\frac{1%
+}{2(m+1)} \\
+&=&\frac{1}{1}-\frac{1}{2}+\frac{1}{3}+...+\frac{1}{2m+1}-\frac{1}{2m+2} \\
+&=&(\frac{1}{1}-\frac{1}{2}+\frac{1}{3}+...+\frac{1}{2m-1}-\frac{1}{2m})+%
+\frac{1}{2m+1}-\frac{1}{2m+2} \\
+&=&L(m)+\frac{1}{2m+1}-\frac{1}{2m+2}
+\end{eqnarray*}
+
+\begin{eqnarray*}
+R(m) &=&\frac{1}{m+1}+\frac{1}{m+2}+...+\frac{1}{2m} \\
+R(m+1) &=&\frac{1}{m+2}+\frac{1}{m+3}+...+\frac{1}{2(m+1)} \\
+&=&(\frac{1}{m+1}+\frac{1}{m+2}+...+\frac{1}{2m})-\frac{1}{m+1}+\frac{1}{2m+1%
+}+\frac{1}{2m+2} \\
+&=&R(m)-\frac{1}{m+1}+\frac{1}{2m+1}+\frac{1}{2m+2}
+\end{eqnarray*}
+
+Thus we must show, 
+\begin{equation*}
+L(m+1)=L(m)+\frac{1}{2m+1}-\frac{1}{2m+2}=\underset{\text{By IH,}L(m)=R(m)}{%
+L(m)-\frac{1}{m+1}+\frac{1}{2m+1}+\frac{1}{2m+2}=}R(m)-\frac{1}{m+1}+\frac{1%
+}{2m+1}+\frac{1}{2m+2}=R(m+1)
+\end{equation*}
+
+as desired. Hence the result follows.
+
+\textbf{This is an identity for finite sums. These types of questions can be
+proved in the same.}
+
+\begin{problem}
+Let $n$ be a postive integer. A bit shall mean an element of M $\{0,1\}.$An $%
+n$-bitstring shall mean an $n$-tuple of bits. For example, $\{1,0,1\}$ is a $%
+3$-bitstring. Prove that there exists a list $\{b_{1},b_{2},...,b_{2^{n}}\}$
+of all $\ n$-bitstrings exactly once and has the property that for each $%
+i\in \{1,2,...,2^{n}\}$, the two $n$-bitstrings $b_{1}$ and $b_{i-1}$ differ
+in exactly one entry. [Here $b_{0}$ means $b_{2^{n}}$]
+\end{problem}
+\end{proof}
+
+\textbf{Rough Sketch}: The case for $n=1$, we have the bitstrings $%
+(0)\rightarrow (1)$. For $n=2,$ we have $(0,0)$ , $(0,1)$,$(1,1)$ and $(1,0)$%
+.
+
+\begin{equation*}
+(0,0)\rightarrow (0,1)\rightarrow (1,1)\rightarrow (1,0)
+\end{equation*}
+
+For $n=3$, we first copy the the two bit strings and add $0$ infront of
+them, then do same with $1$ in front of them). Then, we merge the two
+according to the conditions of the question.
+
+We can use the following algorithm.
+
+\begin{algorithm}
+1. Copy the previous $n-1$ bitstrings, append $0$ infront of them and store
+them in a list $L$.
+
+2. Copy the previous $n-1$ bitstrings, append $1$ infront of them and store
+them in a list $R$.
+
+3. Reverse the order of elements in $R$.
+
+4. Append $R$ to $L$.
+\end{algorithm}
+
+\begin{equation*}
+\text{1. }(0,0,0)\rightarrow (0,0,1)\rightarrow (0,1,1)\rightarrow (0,1,0)
+\end{equation*}%
+\begin{equation*}
+\text{2. }(1,0,0)\rightarrow (1,0,1)\rightarrow (1,1,1)\rightarrow (1,1,0)
+\end{equation*}%
+\begin{equation*}
+\text{3. }(1,1,0)\rightarrow (1,1,1)\rightarrow (1,0,1)\rightarrow (1,0,0)
+\end{equation*}%
+\begin{equation*}
+\text{4. }(0,0,0)\rightarrow (0,0,1)\rightarrow (0,1,1)\rightarrow
+(0,1,0)\rightarrow (1,1,0)\rightarrow (1,1,1)\rightarrow (1,0,1)\rightarrow
+(1,0,0)
+\end{equation*}
+
+\begin{proof}
+We will prove by induction on $n$.
+
+Base case: $n=1$, we have done this above.
+
+Induction Step: Let $m$ be a positive integer. Assume the claim holds for $%
+n=m$ (the induction hypothesis). We must prove that the claim holds for $%
+n=m+1$. The induction hypothesis tells us that there is a list $%
+\{b_{1},b_{2},...,b_{2^{m}}\}$ that satisfies the conditions in the problem.
+
+Now for an $m$ bitstring $b$ let $0b$ be the $(m+1)$ bitstring obtained by
+inserting $0$ to the left end of the bitstring.
+
+\begin{equation*}
+b=c_{1},c_{2},...,c_{m}\implies 0b=0,c_{1},c_{2},...,c_{m}
+\end{equation*}
+
+Similarly let $1b$ denote the $(m+1)$ bitstring obtained by inserting $1$ to
+the left end of the bitstring.
+
+\begin{equation*}
+b=c_{1},c_{2},...,c_{m}\implies 1b=1,c_{1},c_{2},...,c_{m}
+\end{equation*}
+
+\begin{claim}
+\begin{equation*}
+\{0b_{1},0b_{2},...,0b_{2^{m}},1b_{2^{m}},1b_{2^{m}-1},...,1b_{1}\}
+\end{equation*}
+
+forms an $(m+1)$ bitstring that satisfies all the conditions.
+
+\begin{proof}
+For $\{0b_{1},0b_{2},...,0b_{2^{m}}\}$ and $\{1b_{1},1b_{2},...,1b_{2^{m}}\}$
+it is clear that the given conditions are satisfied. For $%
+\{0b_{2^{m}},1b_{2^{m}}\}$, it is clear that the conditions are satisfied
+because only one entry is changed. The same reasoning shows that $%
+(1b_{1}\rightarrow 0b_{1})$ also satisfies the conditions. Since all the
+conditions are satisfied, our claim follows.
+\end{proof}
+\end{claim}
+\end{proof}
+
+\bigskip
+
+\begin{problem}
+Prove that any nonempty finite set of integers has a maximum
+\end{problem}
+
+Rough Sketch: We restate the problem: Let $n$ be a positive integer, any set
+of $n$ integers must have maximum.
+
+\begin{claim}
+Let $n$ be a positive integer, any set of $n$ integers must have maximum.
+
+\begin{proof}
+We induct on $n.$
+
+Base Case: For $n=1$, there is only one integer in the set and it is the
+maximum.
+
+Induction Step: Let $m$ be a postive integer. Assume that any $m$-element
+set of integers has a maximum(IH). We must show that any ($m+1)$-element set
+of integers has a maximum.
+
+Let $s$ be an arbitrary element of $S$, the ($m+1)$-element set of integers.
+Consider $S\backslash \{s\dot{\}}$. We can do this because $S$ is nonempty
+by definition.
+
+By the IH, $S\backslash \{s\dot{\}}$ has a maximum. Let $t$ be that maximum.
+
+\begin{claim}
+$S$ has a maximum, namely:
+
+\begin{itemize}
+\item If $t\geq s$, then $t$ is the maximum.
+
+\item otherwise, s is the maximum.
+
+Thus, our induction step is complete, and our result follows.
+\end{itemize}
+\end{claim}
+\end{proof}
+\end{claim}
+
+\begin{problem}
+Let $g$ and $h$ be integers s.t. $g\leq h$. Let $b_{g},b_{g+1},...,b_{h}$be
+any $h-g+1$ nonzero integers. Assume that $b_{g}\geq 0$. Assume further that
+
+\begin{equation*}
+|b_{i+1}-b_{i}|\leq 1...\text{ for every }i\in \{g,g+1,...,h-1\}
+\end{equation*}
+\end{problem}
+
+Then, $b_{n}>0$ for each n $\in \{g,g+1,...,h\}$.
+
+Rough Sketch: We induct on $n$.
+
+\bigskip
+
+\begin{proof}
+We induct on $n$. For $n=g$, $b_{g}\geq 0$ and is nonzero thus $b_{g}>0$.
+
+Let $m$ $\in \{g,g+1,...,h-1\}$. Assume that the claim holds for $%
+b_{g},b_{g+1},...,bm$. We must show that the claim holds for $%
+b_{g},b_{g+1},...,b_{m+1}$.
+
+Our IH, tells us that $b_{m}>0(b_{m}\geq 1)$, and we have $%
+|b_{m+1}-b_{m}|\leq 1$. This implies $b_{m+1}\geq b_{m}-1\geq 0$. Since $%
+b_{m+1}$ is nonnegative and nonzero, it must be positive. Hence, our result
+follows and our induction is complete.
+\end{proof}
+
+\begin{problem}
+\bigskip Prove that every integer $n\geq 0$ satisfies
+
+\begin{equation*}
+f_{1}+f_{2}+...+f_{n}=f_{n+2}-1
+\end{equation*}
+
+\begin{proof}
+We induct on $n$.
+
+Base Case: For $n=1$, we have 
+\begin{equation*}
+f_{1}=f_{3}-1=f_{2}+f_{1}-1=2f_{1}-1\rightarrow f_{1}=1\text{, as desired}
+\end{equation*}
+
+Inductive Step: Let $m$ be a postive integer. Assume that $%
+f_{1}+f_{2}+...+f_{m}=f_{m+2}-1$(IH). We must show that $%
+f_{1}+f_{2}+...+f_{m+1}=f_{m+3}-1$ .
+
+\begin{equation*}
+f_{1}+f_{2}+...f_{m}+f_{m+1}=(f_{1}+f_{2}+...f_{m})+f_{m+1}\underset{IH}{=}%
+(f_{m+2}-1)+f_{m+1}=f_{m+3}-1
+\end{equation*}
+
+Hence, our induction step is complete and our result follows.
+\end{proof}
+\end{problem}
+
+\begin{problem}
+Prove that every integer $n>0$ satisfies
+
+\begin{equation*}
+f_{n+1}f_{n-1}-f_{n}^{2}=(-1)^{n}
+\end{equation*}
+\end{problem}
+
+\bigskip \textbf{Trick}: To rewrite%
+\begin{equation*}
+f_{n+m+2}
+\end{equation*}
+
+as 
+\begin{equation*}
+f_{n+(m+1)+1}
+\end{equation*}
+
+instead.
+
+\bigskip 
+
+\bigskip 
+
+\subsection{Pigeonhole Principle}
+
+\textbf{For Injections}
+
+Let $U$ and $V$ be finite sets such that $|U|$ $>|V|$. Let  $f:U\rightarrow V
+$ be any map. Then $f$ cannot be injective.
+
+\bigskip 
+
+\textbf{For "Multi Injections"}
+
+Let $U$ and $V$ be finite sets and $k\in N$. Let  $f:U\rightarrow V$ be any
+map. Assume that for each $v\in V$ and $S=\{u$ $|$ $[u\in U]$ $\wedge $\ \ $%
+f(u)=v\}$.%
+\begin{equation*}
+|S|\text{ }\leq k
+\end{equation*}
+
+Then $U\leq k|V|$.
+
+\bigskip 
+
+The contrapositive is the pigeonhole principle. Of course, the case for
+equality is left for the reader to prove.
+
+\bigskip 
+
+\textbf{For Surjections}
+
+Let $U$ and $V$ be finite sets such that $|U|$ $<|V|$. Let $f:U\rightarrow V$
+be any map. Then  $f$ $\ $cannot be surjective.
+
+\end{document}

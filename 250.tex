@@ -1,0 +1,189 @@
+
+\documentclass{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%TCIDATA{OutputFilter=LATEX.DLL}
+%TCIDATA{Version=5.50.0.2960}
+%TCIDATA{<META NAME="SaveForMode" CONTENT="1">}
+%TCIDATA{BibliographyScheme=Manual}
+%TCIDATA{Created=Friday, May 10, 2024 15:35:39}
+%TCIDATA{LastRevised=Wednesday, May 15, 2024 11:03:43}
+%TCIDATA{<META NAME="GraphicsSave" CONTENT="32">}
+%TCIDATA{<META NAME="DocumentShell" CONTENT="Standard LaTeX\Blank - Standard LaTeX Article">}
+%TCIDATA{CSTFile=40 LaTeX article.cst}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{solution}[theorem]{Solution}
+\newtheorem{summary}[theorem]{Summary}
+\newenvironment{proof}[1][Proof]{\noindent\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+\input{tcilatex}
+\begin{document}
+
+\tableofcontents
+
+\section{Computer Architecture and Organization}
+
+\subsection{Basics:}
+
+\subsubsection{Computer Architecture}
+
+Deals with the\textbf{\ functional behaviou}r of Computer Systems.
+
+\textbf{Design Implementation }for the various parts of the computer
+
+\textit{(Designing)}
+
+\subsubsection{Computer Organization}
+
+Deals with \textbf{structural relationship}
+
+Operational attributes are linked together and contribute to realize the
+architectural specification
+
+\textit{(Utilization)}
+
+\bigskip
+
+\textbf{Computer organization} refers to the operational units and their
+interconnections that realize the architectural specifications.
+
+\bigskip . Examples of architectural attributes include the instruction set, 
+\textbf{the number of bits} used to represent various data types (e.g., 
+\textbf{numbers, characters}),\textbf{\ I/O mechanisms}, and \textbf{%
+techniques for addressing memory}. \bigskip\ Organizational attributes
+include those hardware details transparent to the programmer, such as\textbf{%
+\ control signals}; \textbf{interfaces between the computer and peripherals}%
+; and the \textbf{memory technology used}.
+
+\bigskip
+
+\subsubsection{Functional Units}
+
+Processor: We can think of this as the brain of the system.
+
+\[
+\FRAME{itbpF}{2.4396in}{1.8481in}{0in}{}{}{Figure}{\special{language
+"Scientific Word";type "GRAPHIC";display "USEDEF";valid_file "T";width
+2.4396in;height 1.8481in;depth 0in;original-width 6.6374in;original-height
+5.4613in;cropleft "0";croptop "1";cropright "1";cropbottom "0";tempfilename
+'SDAC2G01.bmp';tempfile-properties "XPR";}} 
+\]
+
+\bigskip
+
+Memory: Stores all the instructions for the processor to work accordingly.
+
+It can also store data
+
+\[
+\FRAME{itbpF}{2.162in}{1.5056in}{0in}{}{}{Figure}{\special{language
+"Scientific Word";type "GRAPHIC";display "USEDEF";valid_file "T";width
+2.162in;height 1.5056in;depth 0in;original-width 6.9514in;original-height
+8.1664in;cropleft "0";croptop "1";cropright "1";cropbottom "0";tempfilename
+'SDAC7B02.bmp';tempfile-properties "XPR";}} 
+\]
+
+\bigskip
+
+I/O Peripherals:
+
+Input $\rightarrow $Memory$\rightarrow $Processor$\rightarrow $%
+(Memory)/Output
+
+\[
+\FRAME{itbpF}{2.3774in}{1.6855in}{0in}{}{}{Figure}{\special{language
+"Scientific Word";type "GRAPHIC";display "USEDEF";valid_file "T";width
+2.3774in;height 1.6855in;depth 0in;original-width 3.1765in;original-height
+1.7149in;cropleft "0";croptop "1";cropright "1";cropbottom "0";tempfilename
+'SDACA903.bmp';tempfile-properties "XPR";}} 
+\]
+
+The intercommunication of all these functional units is carried out with the
+help of the \textbf{System Bus}
+
+Full picture:
+
+\[
+\FRAME{itbpF}{3.5656in}{2.8798in}{0in}{}{}{Figure}{\special{language
+"Scientific Word";type "GRAPHIC";display "USEDEF";valid_file "T";width
+3.5656in;height 2.8798in;depth 0in;original-width 11.8531in;original-height
+8.6663in;cropleft "0";croptop "1";cropright "1";cropbottom "0";tempfilename
+'SDACDE04.bmp';tempfile-properties "XPR";}} 
+\]
+
+\bigskip
+
+\subsection{Basics Of Computer Architecture}
+
+It is the \textbf{design of computers}, including their \textbf{instruction
+sets, hardware components} and\textbf{\ system organization}.
+
+\textbf{Computer architecture} refers to those attributes of a system
+visible to a
+
+programmer or, put another way, those attributes that have a direct impact on
+
+the logical execution of a program.
+
+\bigskip
+
+It has two parts:
+
+1. \textbf{Instruction Set Architecture}(ISA)
+
+\qquad Specification to determine how machine language programs will
+interact with the computer
+
+The ISA defines instruction formats, instruction opcodes, registers,
+instruction and data memory; the effect of executed instructions on the
+registers and memory; and an algorithm for controlling instruction execution.
+
+2. \textbf{Hardware Set Architecture}(HSA)
+
+\qquad Deals with with the major computer subsystems like CPU, Storage, I/O
+etc. It includes both the logical design and data flow organization of the
+subsystems and hence determines their efficiency.
+
+\bigskip
+
+\[
+\FRAME{itbpF}{3.8579in}{1.1606in}{0in}{}{}{Figure}{\special{language
+"Scientific Word";type "GRAPHIC";display "USEDEF";valid_file "T";width
+3.8579in;height 1.1606in;depth 0in;original-width 16.5387in;original-height
+3.9704in;cropleft "0";croptop "1";cropright "1";cropbottom "0";tempfilename
+'SDACVL05.bmp';tempfile-properties "XPR";}} 
+\]
+
+\bigskip
+
+Illustration:
+
+\bigskip
+
+Suppose we want to add two values: (Example: $2$ and $3$) and store them in
+a variable ($z$)
+
+\[
+z=2+3 
+\]
+
+\bigskip
+
+\end{document}
